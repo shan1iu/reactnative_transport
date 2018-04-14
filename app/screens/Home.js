@@ -25,17 +25,55 @@ class Home extends Component {
 						region={{
 							latitude: 53.4677054,
 							longitude: -2.2334529,
-							latitudeDelta: 0.02,
-							longitudeDelta: 0.02,
+							latitudeDelta: 0.005,
+							longitudeDelta: 0.005,
 						}}
 						showsCompass={true}
+						showsTraffic={false}
+						onPress={e => console.log(e.nativeEvent)}
 					>
+						{/* ME */}
 						<Marker
 							coordinate={{
 								latitude: 53.4677054,
-								longitude: -2.2334529,
-								latitudeDelta: 0.02,
-								longitudeDelta: 0.02,
+								longitude: -2.2334529
+							}}
+							title="me"
+							description="Where I am"
+						/>
+						{/* BUS */}
+						<Marker
+							coordinate={{
+								latitude: 53.4675,
+								longitude: -2.23465
+							}}
+							title="me"
+							description="Where I am"
+						/>
+						{/* CARPARK */}
+						{/**/}
+						<Marker
+							coordinate={{
+								latitude: 53.46584148528714,
+								longitude: -2.234366232947922
+							}}
+							title="me"
+							description="Where I am"
+						/>
+						{/* TRAM */}
+						<Marker
+							coordinate={{
+								latitude: 53.468455440547984,
+								longitude: -2.231624012018449
+							}}
+							title="me"
+							description="Where I am"
+						/>
+						{/* TRAIN */}
+						<Marker
+							coordinate={{
+								latitude: 53.46917239821252,
+								longitude: -2.234366232947922
 							}}
 							title="me"
 							description="Where I am"
