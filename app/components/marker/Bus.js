@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { Marker } from "react-native-maps";
-import { Icon, Divider, Text, Button } from "react-native-elements";
+import { Icon, Divider, Text, Badge } from "react-native-elements";
 import Modal from "react-native-modal";
 
 const USERKEY1 = "app_id=2ab3f5e2&app_key=4f694a46d98dde70516abbc1f636b93a";
@@ -93,6 +93,34 @@ class Bus extends Component {
               {stop_name}
             </Text>
             <Divider style={{ backgroundColor: "#ededed", marginBottom: 10 }} />
+            {/* use arrow function here */}
+            <ScrollView>
+              {Object.keys(this.state.busDetail).map((key, index) => {
+                return (
+                  <View key={index} style={{ display: "flex", flex: 1 }}>
+                    <Badge
+                      value={key}
+                      textStyle={{ color: "orange" }}
+                      containerStyle={{
+                        display: "flex",
+                        justifyContent: "flex-start"
+                      }}
+                    />
+                    {this.state.busDetail[key].map((time, index) => (
+                      <Badge
+                        containerStyle={{
+                          backgroundColor: "violet",
+                          display: "flex",
+                          justifyContent: "flex-end"
+                        }}
+                      >
+                        <Text>{time.aimed_departure_time}</Text>
+                      </Badge>
+                    ))}
+                  </View>
+                );
+              })}
+            </ScrollView>
             <View style={{ position: "absolute", right: 5, bottom: 5 }}>
               <Icon
                 reverse
