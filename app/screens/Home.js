@@ -64,7 +64,7 @@ class Home extends Component {
   //get nearBy BusStop
   handleGetNearByBusStop(latitude, longitude) {
     fetch(
-      `http://transportapi.com/v3/uk/bus/stops/near.json?${USERKEY1}&lat=${latitude}&lon=${longitude}`
+      `http://transportapi.com/v3/uk/bus/stops/near.json?${USERKEY2}&lat=${latitude}&lon=${longitude}`
     )
       .then(res => res.json())
       .then(res => {
@@ -80,7 +80,7 @@ class Home extends Component {
   //get nearBy Train Stop
   handleGetNearByTrainStop(latitude, longitude) {
     fetch(
-      `http://transportapi.com/v3/uk/train/stations/near.json?${USERKEY1}&lat=${latitude}&lon=${longitude}`
+      `http://transportapi.com/v3/uk/train/stations/near.json?${USERKEY2}&lat=${latitude}&lon=${longitude}`
     )
       .then(res => res.json())
       .then(res => {
@@ -127,11 +127,11 @@ class Home extends Component {
           this.state.currentLocationMe.latitude,
           this.state.currentLocationMe.longitude
         );
-        this.handleGetNearByTrainStop(
-          this.state.currentLocationMe.latitude,
-          this.state.currentLocationMe.longitude
-        );
-        this.handleGetNearByCarPark();
+        // this.handleGetNearByTrainStop(
+        //   this.state.currentLocationMe.latitude,
+        //   this.state.currentLocationMe.longitude
+        // );
+        // this.handleGetNearByCarPark();
       },
       err => {
         console.log(`ERROR(${err.code}): ${err.message}`);
@@ -182,8 +182,8 @@ class Home extends Component {
             showsCompass={true}
             showsTraffic={true}
             scrollEnabled={true}
-						showsUserLocation={true}
-						showsPointsOfInterest={false}
+            showsUserLocation={false}
+            showsPointsOfInterest={false}
             onUserLocationChange={e =>
               console.log("onUserLocationChange:", e.latitude, e.longitude)
             }

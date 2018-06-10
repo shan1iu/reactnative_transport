@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  TabBarBottom,
-  TabNavigator,
-  createBottomTabNavigator
-} from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import Home from "../screens/Home";
