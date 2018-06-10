@@ -50,7 +50,6 @@ class Bus extends Component {
         this.setState({
           busDetail: res.departures
         });
-        console.log(this.state.busDetail);
       })
       .catch(error => {
         console.error(error);
@@ -108,6 +107,7 @@ class Bus extends Component {
                     />
                     {this.state.busDetail[key].map((time, index) => (
                       <Badge
+                        key={index}
                         containerStyle={{
                           backgroundColor: "violet",
                           display: "flex",

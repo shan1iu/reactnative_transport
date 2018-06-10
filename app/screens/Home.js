@@ -9,7 +9,7 @@ import Tram from "../components/marker/Tram";
 import Train from "../components/marker/Train";
 import metrolink_data from "../data/metrolink";
 
-const DELTA = 0.0025;
+const DELTA = 0.1;
 const USERKEY1 = "app_id=2ab3f5e2&app_key=4f694a46d98dde70516abbc1f636b93a";
 const USERKEY2 = "app_id=21531a5c&app_key=aa1b4a07c862e7cfdb7dafb23bf888a9";
 const TFGM_KEY = {
@@ -131,7 +131,7 @@ class Home extends Component {
         //   this.state.currentLocationMe.latitude,
         //   this.state.currentLocationMe.longitude
         // );
-        // this.handleGetNearByCarPark();
+        this.handleGetNearByCarPark();
       },
       err => {
         console.log(`ERROR(${err.code}): ${err.message}`);
@@ -236,6 +236,7 @@ class Home extends Component {
                     latitude: info_latitude,
                     longitude: info_longitude
                   }}
+                  name={carpark.Description}
                 />
               );
             })}
