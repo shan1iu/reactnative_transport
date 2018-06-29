@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { StyleSheet, View, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, View, ScrollView, Text } from "react-native";
 import { Marker } from "react-native-maps";
-import { Icon, Text, Divider, List, ListItem } from "react-native-elements";
+import { Icon, Badge } from "react-native-elements";
 import Modal from "react-native-modal";
 
 const TFGM_KEY = {
@@ -25,7 +25,6 @@ class CarPark extends Component {
         this.setState({
           carparkDetail: res
         });
-        console.log(res);
       })
       .catch(error => {
         console.error(error);
@@ -45,11 +44,6 @@ class CarPark extends Component {
         id={this.props.id}
         onPress={e => {
           e.preventDefault();
-          // alert(
-          //   `CARPARK\nID:${this.props.id}\nDescription:${
-          //     this.props.description
-          //   }\n`
-          // );
           this.getCarparkDetail(id);
         }}
       >
@@ -62,28 +56,102 @@ class CarPark extends Component {
           iconStyle={styles.containerStyle}
           onPress={this._toggleModal}
         />
-        <Modal isVisible={this.state.isModalVisible}>
+        <Modal
+          isVisible={this.state.isModalVisible}
+          onSwipe={() =>
+            this.setState({ isModalVisible: !this.state.isModalVisible })
+          }
+          swipeDirection="down"
+          style={{
+            justifyContent: "flex-end",
+            margin: 0
+          }}
+        >
           <View style={styles.modalStyle}>
-            <Text
-              h4
-              style={{ textAlign: "center", marginTop: 10, marginBottom: 10 }}
-            >
-              {name}
-            </Text>
-            <Divider style={{ backgroundColor: "#ededed", marginBottom: 10 }} />
-            <Text>State:{this.state.carparkDetail.State}</Text>
-            <Text>Capacity:{this.state.carparkDetail.Capacity}</Text>
-            <Text>Occupany:{this.state.carparkDetail.Occupancy}</Text>
-          </View>
-          <View style={{ position: "absolute", right: 5, bottom: 5 }}>
-            <Icon
-              reverse
-              name="md-close"
-              type="ionicon"
-              color="#F64A4A"
-              onPress={this._toggleModal}
-              containerStyle={{ paddingTop: 2, paddingLeft: 3 }}
-            />
+            <View style={{ flexDirection: "row" }}>
+              <Icon
+                name="parking"
+                type="material-community"
+                color="#0061ff"
+                size={35}
+                iconStyle={{ paddingTop: 22, paddingHorizontal: 10 }}
+              />
+              <Text
+                style={{
+                  marginBottom: 30,
+                  paddingTop: 20,
+                  fontSize: 30,
+                  color: "#0061ff"
+                }}
+              >
+                {this.state.carparkDetail.Description}
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row", height: 60 }}>
+              <Text
+                style={{
+                  fontSize: 25,
+                  paddingHorizontal: 20,
+                  justifyContent: "center",
+                  paddingTop: 5
+                }}
+              >
+                Avaiable
+              </Text>
+              {/* <Text
+                style={{
+                  fontSize: 30,
+                  alignItems: "center",
+                  backgroundColor: "#008843",
+                  color: "#fff",
+                  paddingHorizontal: 10,
+                  lineHeight: 60,
+                  fontWeight: "bold"
+                }}
+              >
+                {parseInt(this.state.carparkDetail.Capacity) -
+                  parseInt(this.state.carparkDetail.Occupancy)}
+              </Text> */}
+              {parseInt(this.state.carparkDetail.Capacity) -
+                parseInt(this.state.carparkDetail.Occupancy) >
+              0 ? (
+                <Badge
+                  value={
+                    parseInt(this.state.carparkDetail.Capacity) -
+                    parseInt(this.state.carparkDetail.Occupancy)
+                  }
+                  textStyle={{
+                    color: "#fff",
+                    fontSize: 30,
+                    fontWeight: "bold"
+                  }}
+                  containerStyle={{ backgroundColor: "#006f37" }}
+                />
+              ) : (
+                <Badge
+                  value={
+                    parseInt(this.state.carparkDetail.Capacity) -
+                    parseInt(this.state.carparkDetail.Occupancy)
+                  }
+                  textStyle={{
+                    color: "#fff",
+                    fontSize: 30,
+                    fontWeight: "bold"
+                  }}
+                  containerStyle={{ backgroundColor: "red" }}
+                />
+              )}
+            </View>
+            <View style={{ position: "absolute", right: 5, bottom: 5 }}>
+              <Icon
+                reverse
+                name="md-close"
+                type="ionicon"
+                color="#0061ff"
+                onPress={this._toggleModal}
+                iconStyle={{ paddingTop: 3, paddingLeft: 1, fontSize: 30 }}
+              />
+            </View>
           </View>
         </Modal>
       </Marker>
@@ -97,9 +165,8 @@ const styles = StyleSheet.create({
     paddingLeft: 2
   },
   modalStyle: {
-    flex: 1,
     backgroundColor: "#fff",
-    borderRadius: 20
+    height: 250
   }
 });
 

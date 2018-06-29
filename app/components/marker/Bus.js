@@ -1,35 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Text } from "react-native";
 import { Marker } from "react-native-maps";
-import { Icon, Divider, Text, Badge } from "react-native-elements";
 import Modal from "react-native-modal";
+import { Icon } from "react-native-elements";
 
 const USERKEY1 = "app_id=2ab3f5e2&app_key=4f694a46d98dde70516abbc1f636b93a";
 const USERKEY2 = "app_id=21531a5c&app_key=aa1b4a07c862e7cfdb7dafb23bf888a9";
-
-// mock data of busdetail
-const mock_data = {
-  15: [
-    {
-      aimed_departure_time: "10:53"
-    },
-    {
-      aimed_departure_time: "11:53"
-    }
-  ],
-  111: [
-    {
-      aimed_departure_time: "10:47"
-    },
-    {
-      aimed_departure_time: "11:07"
-    },
-    {
-      aimed_departure_time: "11:27"
-    }
-  ]
-};
-
 class Bus extends Component {
   constructor(props) {
     super(props);
@@ -83,39 +59,63 @@ class Bus extends Component {
           iconStyle={styles.iconContainerStyle}
           onPress={this._toggleModal}
         />
-        <Modal isVisible={this.state.isModalVisible}>
+        <Modal
+          isVisible={this.state.isModalVisible}
+          style={{
+            justifyContent: "flex-end",
+            margin: 0
+          }}
+        >
+          {/* BUS STOP TITLE */}
           <View style={styles.modalStyle}>
-            <Text
-              h4
-              style={{ textAlign: "center", marginTop: 10, marginBottom: 10 }}
-            >
-              {stop_name}
-            </Text>
-            <Divider style={{ backgroundColor: "#ededed", marginBottom: 10 }} />
-            {/* use arrow function here */}
+            <View style={{ flexDirection: "row" }}>
+              <Icon
+                name="bus"
+                type="material-community"
+                color="#40403e"
+                size={35}
+                iconStyle={{ paddingTop: 22, paddingHorizontal: 10 }}
+              />
+              <Text
+                style={{
+                  marginBottom: 30,
+                  paddingTop: 20,
+                  fontSize: 30
+                }}
+              >
+                {stop_name}
+              </Text>
+            </View>
             <ScrollView>
               {Object.keys(this.state.busDetail).map((key, index) => {
                 return (
-                  <View key={index} style={{ display: "flex", flex: 1 }}>
-                    <Badge
-                      value={key}
-                      textStyle={{ color: "orange" }}
-                      containerStyle={{
-                        display: "flex",
-                        justifyContent: "flex-start"
+                  <View
+                    key={index}
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      height: 60,
+                      marginHorizontal: 10,
+                      marginBottom: 10
+                    }}
+                  >
+                    {/* BUS LINE */}
+                    <Text
+                      style={{
+                        fontSize: 25,
+                        marginHorizontal: 5,
+                        fontWeight: "bold",
+                        width: 75,
+                        color: "#F64A4A"
                       }}
-                    />
+                    >
+                      {key}
+                    </Text>
                     {this.state.busDetail[key].map((time, index) => (
-                      <Badge
-                        key={index}
-                        containerStyle={{
-                          backgroundColor: "violet",
-                          display: "flex",
-                          justifyContent: "flex-end"
-                        }}
-                      >
-                        <Text>{time.aimed_departure_time}</Text>
-                      </Badge>
+                      <Text key={index} style={styles.time}>
+                        {time.aimed_departure_time}
+                      </Text>
                     ))}
                   </View>
                 );
@@ -126,9 +126,21 @@ class Bus extends Component {
                 reverse
                 name="md-close"
                 type="ionicon"
-                color="#F64A4A"
+                // color="#F64A4A"
+                color="#40403e"
                 onPress={this._toggleModal}
-                containerStyle={{ paddingTop: 2, paddingLeft: 3 }}
+                iconStyle={{ paddingTop: 3, paddingLeft: 1, fontSize: 30 }}
+              />
+            </View>
+            <View style={{ position: "absolute", right: 65, bottom: 5 }}>
+              <Icon
+                reverse
+                name="md-heart"
+                type="ionicon"
+                // color="#F64A4A"
+                color="#ddd"
+                onPress={this._toggleModal}
+                iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
               />
             </View>
           </View>
@@ -144,9 +156,23 @@ const styles = StyleSheet.create({
     paddingLeft: 2
   },
   modalStyle: {
-    flex: 1,
     backgroundColor: "#fff",
-    borderRadius: 20
+    height: 600
+  },
+  time: {
+    fontSize: 20,
+    marginHorizontal: 8,
+    paddingHorizontal: 5,
+    backgroundColor: "#fff",
+    shadowOffset: { width: 0, height: 0 },
+    textAlign: "center",
+    lineHeight: 50,
+    height: 50,
+    width: 70,
+    color: "#000",
+    borderWidth: 1,
+    borderRadius: 3,
+    paddingHorizontal: 5
   }
 });
 

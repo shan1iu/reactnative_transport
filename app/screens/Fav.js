@@ -1,33 +1,67 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import Modal from "react-native-modal";
+import {
+  View,
+  StatusBar,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+  Text,
+  Platform
+} from "react-native";
+
+import FavCard from "./favCard/FavCard";
+import NavBar from "./navBar/NavBar";
 
 class Fav extends Component {
-  state = {
-    isModalVisible: false
-  };
+  constructor(props) {
+    super(props);
+  }
 
-  _toggleModal = () =>
-    this.setState({ isModalVisible: !this.state.isModalVisible });
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        {/* other code from before here */}
-        {/* <Text>Fav</Text> */}
-        <TouchableOpacity onPress={this._toggleModal}>
-          <Text>Show Modal</Text>
-        </TouchableOpacity>
-        <Modal isVisible={this.state.isModalVisible}>
-          <View style={{ flex: 1 }}>
-            <Text>Hello!</Text>
-            <TouchableOpacity onPress={this._toggleModal}>
-              <Text>Hide me!</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-      </View>
+      <SafeAreaView style={styles.flex_one}>
+        <NavBar title="Saved" />
+        <ScrollView style={{ flex: 1 }}>
+          {/* BUS */}
+          <FavCard
+            backgroundColor="#40403e"
+            iconName="bus"
+            content="Great Western St"
+          />
+          {/* BUS */}
+          <FavCard
+            backgroundColor="#40403e"
+            iconName="bus"
+            content="Mary Eastern St"
+          />
+          {/* Carpark */}
+          <FavCard
+            backgroundColor="#0061ff"
+            iconName="parking"
+            content="Carkpark Great Western Test"
+          />
+          {/* Train */}
+          <FavCard
+            backgroundColor="#de2929"
+            iconName="train-variant"
+            content="Train Test St Mary"
+          />
+          {/* Tram */}
+          <FavCard
+            backgroundColor="#e8be3e"
+            iconName="tram"
+            content="Tram Garden Great Western"
+          />
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  flex_one: {
+    flex: 1
+  }
+});
 
 export default Fav;

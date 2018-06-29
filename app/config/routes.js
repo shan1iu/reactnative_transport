@@ -28,6 +28,7 @@ export default createBottomTabNavigator(
         )
       }
     },
+
     Route: {
       screen: Route,
       navigationOptions: {

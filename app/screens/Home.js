@@ -9,7 +9,7 @@ import Tram from "../components/marker/Tram";
 import Train from "../components/marker/Train";
 import metrolink_data from "../data/metrolink";
 
-const DELTA = 0.1;
+const DELTA = 0.0025;
 const USERKEY1 = "app_id=2ab3f5e2&app_key=4f694a46d98dde70516abbc1f636b93a";
 const USERKEY2 = "app_id=21531a5c&app_key=aa1b4a07c862e7cfdb7dafb23bf888a9";
 const TFGM_KEY = {
@@ -36,21 +36,9 @@ class Home extends Component {
     );
   }
 
-  componentWillMount() {
-    console.log("===== componentWillMount called =====");
-    this.handleGetCurrentLocation();
-  }
-
   componentDidMount() {
     console.log("===== componentDidMount called =====");
-  }
-
-  componentWillUpdate() {
-    console.log("===== componentWillUpdate called =====");
-  }
-
-  componentDidUpdate() {
-    console.log("===== componentDidUpdate called =====");
+    this.handleGetCurrentLocation();
   }
 
   /*
@@ -182,12 +170,12 @@ class Home extends Component {
             showsCompass={true}
             showsTraffic={true}
             scrollEnabled={true}
-            showsUserLocation={false}
+            showsUserLocation={true}
             showsPointsOfInterest={false}
             onUserLocationChange={e =>
               console.log("onUserLocationChange:", e.latitude, e.longitude)
             }
-            // onPress={e => console.log("onPress:", e.nativeEvent.coordinate)}
+            onPress={e => console.log("onPress:", e.nativeEvent.coordinate)}
           >
             {// Bus STOP RENDERING
             this.state.currentLocationBus.map(busStop => {
