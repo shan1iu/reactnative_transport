@@ -160,10 +160,6 @@ class CarPark extends Component {
 }
 
 const styles = StyleSheet.create({
-  iconContainerStyle: {
-    paddingTop: 3,
-    paddingLeft: 2
-  },
   modalStyle: {
     backgroundColor: "#fff",
     height: 250

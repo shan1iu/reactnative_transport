@@ -244,7 +244,7 @@ class Home extends Component {
             })}
           </MapView>
         </View>
-        <View style={{ position: "absolute", right: 5, bottom: 70 }}>
+        {/* <View style={{ position: "absolute", right: 5, bottom: 70 }}>
           <Icon
             raised
             name="md-refresh"
@@ -253,7 +253,7 @@ class Home extends Component {
             onPress={this.handleRefreshLocation}
             containerStyle={{ paddingTop: 2, paddingLeft: 1.4 }}
           />
-        </View>
+        </View> */}
         <View style={{ position: "absolute", right: 5, bottom: 5 }}>
           <Icon
             raised

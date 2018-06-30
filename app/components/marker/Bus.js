@@ -97,7 +97,10 @@ class Bus extends Component {
                       alignItems: "center",
                       height: 60,
                       marginHorizontal: 10,
-                      marginBottom: 10
+                      marginBottom: 10,
+                      justifyContent: "space-evenly",
+                      borderBottomColor: "#eee",
+                      borderBottomWidth: 1
                     }}
                   >
                     {/* BUS LINE */}
@@ -161,18 +164,10 @@ const styles = StyleSheet.create({
   },
   time: {
     fontSize: 20,
-    marginHorizontal: 8,
-    paddingHorizontal: 5,
-    backgroundColor: "#fff",
-    shadowOffset: { width: 0, height: 0 },
+    paddingLeft: 10,
     textAlign: "center",
     lineHeight: 50,
-    height: 50,
-    width: 70,
-    color: "#000",
-    borderWidth: 1,
-    borderRadius: 3,
-    paddingHorizontal: 5
+    width: 70
   }
 });
 
