@@ -115,10 +115,10 @@ class Home extends Component {
           this.state.currentLocationMe.latitude,
           this.state.currentLocationMe.longitude
         );
-        // this.handleGetNearByTrainStop(
-        //   this.state.currentLocationMe.latitude,
-        //   this.state.currentLocationMe.longitude
-        // );
+        this.handleGetNearByTrainStop(
+          this.state.currentLocationMe.latitude,
+          this.state.currentLocationMe.longitude
+        );
         this.handleGetNearByCarPark();
       },
       err => {
@@ -150,12 +150,6 @@ class Home extends Component {
     });
   }
 
-  // when pressing the marker button
-  // should give information based on marker type (bus/carpark/tram/train)
-  handleMarkerPress = e => {
-    console.log(e.nativeEvent.coordinate);
-  };
-
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -175,7 +169,7 @@ class Home extends Component {
             onUserLocationChange={e =>
               console.log("onUserLocationChange:", e.latitude, e.longitude)
             }
-            onPress={e => console.log("onPress:", e.nativeEvent.coordinate)}
+            // onPress={e => console.log("onPress:", e.nativeEvent.coordinate)}
           >
             {// Bus STOP RENDERING
             this.state.currentLocationBus.map(busStop => {
