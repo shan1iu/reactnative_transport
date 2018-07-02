@@ -4,8 +4,10 @@ import { Marker } from "react-native-maps";
 import Modal from "react-native-modal";
 import { Icon } from "react-native-elements";
 
-const USERKEY1 = "app_id=2ab3f5e2&app_key=4f694a46d98dde70516abbc1f636b93a";
-const USERKEY2 = "app_id=21531a5c&app_key=aa1b4a07c862e7cfdb7dafb23bf888a9";
+import { USERKEY1, USERKEY2 } from "../../config/keys";
+
+// const USERKEY1 = "app_id=2ab3f5e2&app_key=4f694a46d98dde70516abbc1f636b93a";
+// const USERKEY2 = "app_id=21531a5c&app_key=aa1b4a07c862e7cfdb7dafb23bf888a9";
 class Bus extends Component {
   constructor(props) {
     super(props);
@@ -14,9 +16,11 @@ class Bus extends Component {
       busDetail: {}
     };
   }
+
   _toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
+
   getBusDetail(atcocode) {
     fetch(
       `http://transportapi.com/v3/uk/bus/stop/${atcocode}/live.json?${USERKEY2}&nextbuses=no`
@@ -31,6 +35,7 @@ class Bus extends Component {
         console.error(error);
       });
   }
+
   render() {
     const atcocode = this.props.atcocode;
     const stop_name = this.props.stop_name;

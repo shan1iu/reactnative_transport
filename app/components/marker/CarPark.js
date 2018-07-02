@@ -4,9 +4,10 @@ import { Marker } from "react-native-maps";
 import { Icon, Badge } from "react-native-elements";
 import Modal from "react-native-modal";
 
-const TFGM_KEY = {
-  "Ocp-Apim-Subscription-Key": "352d46528de74094835792b951c110fc"
-};
+import { TFGM_KEY } from "../../config/keys";
+// const TFGM_KEY = {
+//   "Ocp-Apim-Subscription-Key": "352d46528de74094835792b951c110fc"
+// };
 
 class CarPark extends Component {
   constructor(props) {

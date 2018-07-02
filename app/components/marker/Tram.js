@@ -5,10 +5,11 @@ import { Icon, Badge } from "react-native-elements";
 import Modal from "react-native-modal";
 
 import TramList from "../modal/TramList";
+import { USERKEY1, USERKEY2, TFGM_KEY } from "../../config/keys";
 
-const TFGM_KEY = {
-  "Ocp-Apim-Subscription-Key": "352d46528de74094835792b951c110fc"
-};
+// const TFGM_KEY = {
+//   "Ocp-Apim-Subscription-Key": "352d46528de74094835792b951c110fc"
+// };
 class Tram extends Component {
   constructor(props) {
     super(props);
