@@ -10,15 +10,6 @@ import Search from "../screens/Search";
 
 export default createBottomTabNavigator(
   {
-    Home: {
-      screen: Home,
-      navigationOptions: {
-        labeled: false,
-        tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="md-home" size={30} color={tintColor} />
-        )
-      }
-    },
     Fav: {
       screen: Fav,
       navigationOptions: {
@@ -28,7 +19,15 @@ export default createBottomTabNavigator(
         )
       }
     },
-
+    Home: {
+      screen: Home,
+      navigationOptions: {
+        labeled: false,
+        tabBarIcon: ({ tintColor }) => (
+          <Ionicons name="md-home" size={30} color={tintColor} />
+        )
+      }
+    },
     Route: {
       screen: Route,
       navigationOptions: {

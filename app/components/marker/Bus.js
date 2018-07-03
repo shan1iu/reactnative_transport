@@ -134,7 +134,6 @@ class Bus extends Component {
                 reverse
                 name="md-close"
                 type="ionicon"
-                // color="#F64A4A"
                 color="#40403e"
                 onPress={this._toggleModal}
                 iconStyle={{ paddingTop: 3, paddingLeft: 1, fontSize: 30 }}
@@ -145,9 +144,7 @@ class Bus extends Component {
                 reverse
                 name="md-heart"
                 type="ionicon"
-                // color="#F64A4A"
                 color="#ddd"
-                onPress={this._toggleModal}
                 iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
               />
             </View>

@@ -124,12 +124,22 @@ class Train extends Component {
                         backgroundColor: "#de2929",
                         color: "#fff",
                         fontWeight: "bold",
-                        paddingHorizontal: 5
+                        paddingHorizontal: 5,
+                        paddingTop: 2
                       }}
                     >
                       {train.platform}
                     </Text>
-                    <Text style={{ paddingTop: 5 }}>{train.operator_name}</Text>
+                    <Text
+                      style={{
+                        paddingTop: 5,
+                        flex: 1,
+                        paddingLeft: 10,
+                        color: "#aaa"
+                      }}
+                    >
+                      {train.operator_name}
+                    </Text>
                     <Text style={{ fontSize: 20, color: "#de2929" }}>
                       {train.expected_departure_time}
                     </Text>
@@ -152,9 +162,7 @@ class Train extends Component {
                 reverse
                 name="md-heart"
                 type="ionicon"
-                // color="#F64A4A"
                 color="#ddd"
-                onPress={this._toggleModal}
                 iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
               />
             </View>

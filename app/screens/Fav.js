@@ -23,16 +23,11 @@ class Fav extends Component {
         <NavBar title="Saved" />
         <ScrollView style={{ flex: 1 }}>
           {/* BUS */}
+
           <FavCard
             backgroundColor="#40403e"
             iconName="bus"
             content="Great Western St"
-          />
-          {/* BUS */}
-          <FavCard
-            backgroundColor="#40403e"
-            iconName="bus"
-            content="Mary Eastern St"
           />
           {/* Carpark */}
           <FavCard

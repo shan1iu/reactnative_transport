@@ -99,20 +99,6 @@ class CarPark extends Component {
               >
                 Avaiable
               </Text>
-              {/* <Text
-                style={{
-                  fontSize: 30,
-                  alignItems: "center",
-                  backgroundColor: "#008843",
-                  color: "#fff",
-                  paddingHorizontal: 10,
-                  lineHeight: 60,
-                  fontWeight: "bold"
-                }}
-              >
-                {parseInt(this.state.carparkDetail.Capacity) -
-                  parseInt(this.state.carparkDetail.Occupancy)}
-              </Text> */}
               {parseInt(this.state.carparkDetail.Capacity) -
                 parseInt(this.state.carparkDetail.Occupancy) >
               0 ? (
@@ -151,6 +137,15 @@ class CarPark extends Component {
                 color="#0061ff"
                 onPress={this._toggleModal}
                 iconStyle={{ paddingTop: 3, paddingLeft: 1, fontSize: 30 }}
+              />
+            </View>
+            <View style={{ position: "absolute", right: 65, bottom: 5 }}>
+              <Icon
+                reverse
+                name="md-heart"
+                type="ionicon"
+                color="#ddd"
+                iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
               />
             </View>
           </View>

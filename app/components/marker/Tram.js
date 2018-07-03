@@ -147,6 +147,15 @@ class Tram extends Component {
                 iconStyle={{ paddingTop: 3, paddingLeft: 1, fontSize: 30 }}
               />
             </View>
+            <View style={{ position: "absolute", right: 65, bottom: 5 }}>
+              <Icon
+                reverse
+                name="md-heart"
+                type="ionicon"
+                color="#ddd"
+                iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
+              />
+            </View>
           </View>
         </Modal>
       </Marker>
