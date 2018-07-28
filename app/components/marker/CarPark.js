@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-import { StyleSheet, View, ScrollView, Text } from "react-native";
+import { StyleSheet, View, AsyncStorage, Text } from "react-native";
 import { Marker } from "react-native-maps";
 import { Icon, Badge } from "react-native-elements";
 import Modal from "react-native-modal";
 
 import { TFGM_KEY } from "../../config/keys";
-// const TFGM_KEY = {
-//   "Ocp-Apim-Subscription-Key": "352d46528de74094835792b951c110fc"
-// };
 
 class CarPark extends Component {
   constructor(props) {
@@ -34,6 +31,16 @@ class CarPark extends Component {
 
   _toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
+
+  saveCarpark = id => {
+    try {
+      AsyncStorage.setItem(`carpark_${id}`, `${id}`).then(() => {
+        alert("Success!");
+      });
+    } catch (error) {
+      alert("Failed to saved, Please try again");
+    }
   };
 
   render() {
@@ -146,6 +153,10 @@ class CarPark extends Component {
                 type="ionicon"
                 color="#ddd"
                 iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
+                onPress={e => {
+                  e.preventDefault();
+                  this.saveCarpark(id);
+                }}
               />
             </View>
           </View>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { StyleSheet, View, Text, ScrollView, AsyncStorage } from "react-native";
 import { Marker } from "react-native-maps";
 import { Icon } from "react-native-elements";
 import Modal from "react-native-modal";
@@ -34,6 +34,16 @@ class Train extends Component {
         console.error(error);
       });
   }
+
+  saveTrain = station_code => {
+    try {
+      AsyncStorage.setItem(`train_${station_code}`, `${station_code}`).then(() => {
+        alert("Success!");
+      });
+    } catch (error) {
+      alert("Failed to saved, Please try again");
+    }
+  };
 
   render() {
     const station_code = this.props.station_code;
@@ -164,6 +174,10 @@ class Train extends Component {
                 type="ionicon"
                 color="#ddd"
                 iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
+                onPress={e => {
+                  e.preventDefault();
+                  this.saveTrain(station_code);
+                }}
               />
             </View>
           </View>

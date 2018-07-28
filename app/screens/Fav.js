@@ -7,7 +7,6 @@ import {
   AsyncStorage
 } from "react-native";
 import { Button } from "react-native-elements";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 import FavCard from "./favCard/FavCard";
 import NavBar from "./navBar/NavBar";
@@ -16,20 +15,25 @@ class Fav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      storage_key: []
+      asyncStorage: []
     };
+  }
+
+  componentWillMount() {
+    this._retrieveData();
   }
 
   // get all the keys and render the component on Fav screen.
   _retrieveData = async () => {
     try {
-      const value = await AsyncStorage.getAllKeys();
-      if (value !== null) {
-        // We have data!!
-        console.log(value);
+      const keys = await AsyncStorage.getAllKeys();
+      if (keys !== null) {
+        // console.log(keys);
+        this.setState({ asyncStorage: keys });
+        console.log(this.state.asyncStorage);
       }
     } catch (error) {
-      // Error retrieving data
+      alert("Failed! Try again later");
     }
   };
 
@@ -73,6 +77,7 @@ class Fav extends Component {
             borderRadius: 5
           }}
           containerStyle={{ marginHorizontal: 20, marginVertical: 10 }}
+          onPress={this._retrieveData}
         />
       </SafeAreaView>
     );

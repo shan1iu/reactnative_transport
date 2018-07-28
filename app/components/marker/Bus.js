@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, ScrollView, Text } from "react-native";
+import { StyleSheet, View, ScrollView, Text, AsyncStorage } from "react-native";
 import { Marker } from "react-native-maps";
 import Modal from "react-native-modal";
 import { Icon } from "react-native-elements";
@@ -17,10 +17,6 @@ class Bus extends Component {
     };
   }
 
-  _toggleModal = () => {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
-  };
-
   getBusDetail(atcocode) {
     fetch(
       `http://transportapi.com/v3/uk/bus/stop/${atcocode}/live.json?${USERKEY2}&nextbuses=no`
@@ -35,6 +31,20 @@ class Bus extends Component {
         console.error(error);
       });
   }
+
+  _toggleModal = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
+
+  saveBus = atcocode => {
+    try {
+      AsyncStorage.setItem(`bus_${atcocode}`, `${atcocode}`).then(() => {
+        alert("Success!");
+      });
+    } catch (error) {
+      alert("Failed to saved, Please try again");
+    }
+  };
 
   render() {
     const atcocode = this.props.atcocode;
@@ -130,6 +140,7 @@ class Bus extends Component {
               })}
             </ScrollView>
             <View style={{ position: "absolute", right: 5, bottom: 5 }}>
+              {/* close Modal */}
               <Icon
                 reverse
                 name="md-close"
@@ -140,12 +151,17 @@ class Bus extends Component {
               />
             </View>
             <View style={{ position: "absolute", right: 65, bottom: 5 }}>
+              {/* save to Modal */}
               <Icon
                 reverse
                 name="md-heart"
                 type="ionicon"
                 color="#ddd"
                 iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
+                onPress={e => {
+                  e.preventDefault();
+                  this.saveBus(atcocode);
+                }}
               />
             </View>
           </View>

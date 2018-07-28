@@ -35,13 +35,11 @@ class Tram extends Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
-  storeTest = async id => {
+  saveTram = id => {
     try {
-      await AsyncStorage.setItem(`tramkey_${id}`, `tramvalue_${id}`).then(
-        () => {
-          alert("Success!");
-        }
-      );
+      AsyncStorage.setItem(`tram_${id}`, `${id}`).then(() => {
+        alert("Success!");
+      });
     } catch (error) {
       alert("Failed to saved, Please try again");
     }
@@ -153,11 +151,10 @@ class Tram extends Component {
                 type="ionicon"
                 color="#e5b700"
                 iconStyle={{ paddingTop: 3, paddingLeft: 1, fontSize: 30 }}
-                onPress={e=>{
-                    e.preventDefault();
-                    this._toggleModal();
-                  }
-                }
+                onPress={e => {
+                  e.preventDefault();
+                  this._toggleModal();
+                }}
               />
             </View>
             <View style={{ position: "absolute", right: 65, bottom: 5 }}>
@@ -167,11 +164,10 @@ class Tram extends Component {
                 type="ionicon"
                 color="#ddd"
                 iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
-                onPress={e=>{
-                    e.preventDefault();
-                    this.storeTest(this.props.id);
-                  }
-                }
+                onPress={e => {
+                  e.preventDefault();
+                  this.saveTram(this.props.id);
+                }}
               />
             </View>
           </View>
