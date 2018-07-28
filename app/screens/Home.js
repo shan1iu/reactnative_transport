@@ -41,14 +41,6 @@ class Home extends Component {
     this.handleGetCurrentLocation();
   }
 
-  /*
-	* getCurrentLocation
-	* return {
-	* 	latitude: crd.latitude,
-	* 	longitude: crd.longitude
-	* }
-	* */
-
   //get nearBy BusStop
   handleGetNearByBusStop(latitude, longitude) {
     fetch(
