@@ -58,17 +58,15 @@ class Fav extends Component {
             });
           });
         });
-        // console.log(this.state);
       }
     } catch (error) {
-      // console.log(error);
       alert("Failed! Try again later");
     }
   };
 
   render() {
     return (
-      <SafeAreaView style={styles.flex_one}>
+      <SafeAreaView style={{ flex: 1 }}>
         <NavBar title="Saved" />
         <ScrollView style={{ flex: 1 }}>
           {/* code is for api use, such as id/atcocode ... */}
@@ -121,28 +119,9 @@ class Fav extends Component {
           containerStyle={{ marginHorizontal: 20, marginVertical: 10 }}
           onPress={this._retrieveData}
         />
-        {/* <Button
-          title="Delete"
-          titleStyle={{ fontWeight: "700" }}
-          buttonStyle={{
-            backgroundColor: "#bbbbbb",
-            height: 45,
-            borderRadius: 5
-          }}
-          containerStyle={{ marginHorizontal: 20, marginVertical: 10 }}
-          onPress={() => {
-            AsyncStorage.clear().then(alert("Success"));
-          }}
-        /> */}
       </SafeAreaView>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  flex_one: {
-    flex: 1
-  }
-});
 
 export default Fav;
