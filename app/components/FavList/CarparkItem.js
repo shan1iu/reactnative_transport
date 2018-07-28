@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, View, AsyncStorage, Text } from "react-native";
-import { Marker } from "react-native-maps";
-import { Icon, Badge } from "react-native-elements";
+import { StyleSheet, View, Text } from "react-native";
+import { Button, Icon, Badge } from "react-native-elements";
 import Modal from "react-native-modal";
 
 import { TFGM_KEY } from "../../config/keys";
 
-class CarPark extends Component {
+class CarparkItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,41 +28,75 @@ class CarPark extends Component {
       });
   }
 
-  _toggleModal = () => {
+  _toggleModal1 = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+    this.getCarparkDetail(this.props.code);
+  };
+
+  _toggleModal2 = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
-  saveCarpark = (id, name) => {
-    try {
-      AsyncStorage.setItem(`carpark_${id}`, `${name}-${id}`).then(() => {
-        alert("Success!");
-      });
-    } catch (error) {
-      alert("Failed to saved, Please try again");
-    }
-  };
-
   render() {
-    const id = this.props.id;
-    const name = this.props.name;
     return (
-      <Marker
-        coordinate={this.props.coordinate}
-        id={this.props.id}
-        onPress={e => {
-          e.preventDefault();
-          this.getCarparkDetail(id);
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          backgroundColor: "white",
+          height: 60,
+          justifyContent: "space-between",
+          marginHorizontal: 10,
+          marginTop: 10,
+          backgroundColor: "#0061ff",
+          borderRadius: 3
         }}
       >
-        <Icon
-          raised
-          name="parking"
-          type="material-community"
-          color="#0061ff"
-          size={20}
-          iconStyle={styles.containerStyle}
-          onPress={this._toggleModal}
-        />
+        {/* Icon */}
+        <View>
+          <Icon
+            name="parking"
+            type="material-community"
+            color="#fff"
+            size={40}
+            iconStyle={{ paddingHorizontal: 10, paddingTop: 10 }}
+          />
+        </View>
+        {/* Content */}
+        <View
+          style={{
+            flexDirection: "row",
+            flexGrow: 1,
+            alignItems: "center"
+          }}
+        >
+          <Text
+            style={{
+              paddingHorizontal: 5,
+              fontSize: 20,
+              alignContent: "center",
+              color: "#fff",
+              fontWeight: "bold"
+            }}
+          >
+            {this.props.content.length > 18
+              ? this.props.content.substring(0, 18) + "..."
+              : this.props.content}
+          </Text>
+        </View>
+        {/* Button */}
+        <View>
+          <Button
+            onPress={this._toggleModal1}
+            title="VIEW"
+            buttonStyle={{
+              backgroundColor: null,
+              width: 75,
+              height: 60
+            }}
+            titleStyle={{ fontWeight: "bold" }}
+          />
+        </View>
         <Modal
           isVisible={this.state.isModalVisible}
           onSwipe={() =>
@@ -93,7 +126,7 @@ class CarPark extends Component {
                 }}
               >
                 {/* {this.state.carparkDetail.Description} */}
-                {name}
+                {this.props.content}
               </Text>
             </View>
             <View style={{ flexDirection: "row", height: 60 }}>
@@ -143,26 +176,13 @@ class CarPark extends Component {
                 name="md-close"
                 type="ionicon"
                 color="#0061ff"
-                onPress={this._toggleModal}
+                onPress={this._toggleModal2}
                 iconStyle={{ paddingTop: 3, paddingLeft: 1, fontSize: 30 }}
-              />
-            </View>
-            <View style={{ position: "absolute", right: 65, bottom: 5 }}>
-              <Icon
-                reverse
-                name="md-heart"
-                type="ionicon"
-                color="#ddd"
-                iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
-                onPress={e => {
-                  e.preventDefault();
-                  this.saveCarpark(id, name);
-                }}
               />
             </View>
           </View>
         </Modal>
-      </Marker>
+      </View>
     );
   }
 }
@@ -174,4 +194,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CarPark;
+export default CarparkItem;

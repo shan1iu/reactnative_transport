@@ -1,20 +1,28 @@
 import React, { Component } from "react";
-import { StyleSheet, View, ScrollView, Text, AsyncStorage } from "react-native";
-import { Marker } from "react-native-maps";
+import { StyleSheet, View, ScrollView, Text } from "react-native";
+import { Button, Icon } from "react-native-elements";
 import Modal from "react-native-modal";
-import { Icon } from "react-native-elements";
 
 import { USERKEY1, USERKEY2 } from "../../config/keys";
 
-// const USERKEY1 = "app_id=2ab3f5e2&app_key=4f694a46d98dde70516abbc1f636b93a";
-// const USERKEY2 = "app_id=21531a5c&app_key=aa1b4a07c862e7cfdb7dafb23bf888a9";
-class Bus extends Component {
+class BusItem extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isModalVisible: false,
-      busDetail: {}
-    };
+    this.state = { isModalVisible: false, busDetail: {} };
+    this._toggleModal1 = this._toggleModal1.bind(this);
+    this._toggleModal2 = this._toggleModal2.bind(this);
+    this.getBusDetail = this.getBusDetail.bind(this);
+  }
+  componentMount() {
+    console.log(this.props);
+  }
+  _toggleModal1() {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+    this.getBusDetail(this.props.code);
+  }
+
+  _toggleModal2() {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
   }
 
   getBusDetail(atcocode) {
@@ -32,50 +40,66 @@ class Bus extends Component {
       });
   }
 
-  _toggleModal = () => {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
-  };
-
-  saveBus = (atcocode, name) => {
-    try {
-      AsyncStorage.setItem(`bus_${atcocode}`, `${name}-${atcocode}`).then(
-        () => {
-          alert("Success!");
-        }
-      );
-    } catch (error) {
-      alert("Failed to saved, Please try again");
-    }
-  };
-
   render() {
-    const atcocode = this.props.atcocode;
-    const stop_name = this.props.stop_name;
     return (
-      <Marker
-        atcocode={this.props.atcocode}
-        coordinate={this.props.coordinate}
-        stop_name={this.props.stop_name}
-        name={this.props.name}
-        onPress={e => {
-          e.preventDefault();
-          // alert(
-          //   `BUS\nAtcocode:${this.props.atcocode}\nStop_name:${
-          //     this.props.stop_name
-          //   }\nName:${this.props.name}`
-          // );
-          this.getBusDetail(atcocode);
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          backgroundColor: "white",
+          height: 60,
+          justifyContent: "space-between",
+          marginHorizontal: 10,
+          marginTop: 10,
+          backgroundColor: "#40403e",
+          borderRadius: 3
         }}
       >
-        <Icon
-          raised
-          name="bus"
-          type="material-community"
-          color="#40403e"
-          size={20}
-          iconStyle={styles.iconContainerStyle}
-          onPress={this._toggleModal}
-        />
+        {/* Icon */}
+        <View>
+          <Icon
+            name="bus"
+            type="material-community"
+            color="#fff"
+            size={40}
+            iconStyle={{ paddingHorizontal: 10, paddingTop: 10 }}
+          />
+        </View>
+        {/* Content */}
+        <View
+          style={{
+            flexDirection: "row",
+            flexGrow: 1,
+            alignItems: "center"
+          }}
+        >
+          <Text
+            style={{
+              paddingHorizontal: 5,
+              fontSize: 20,
+              alignContent: "center",
+              color: "#fff",
+              fontWeight: "bold"
+            }}
+          >
+            {this.props.content.length > 18
+              ? this.props.content.substring(0, 18) + "..."
+              : this.props.content}
+          </Text>
+        </View>
+        {/* Button */}
+        <View>
+          <Button
+            onPress={this._toggleModal1}
+            title="VIEW"
+            buttonStyle={{
+              backgroundColor: null,
+              width: 75,
+              height: 60
+            }}
+            titleStyle={{ fontWeight: "bold" }}
+          />
+        </View>
         {/* ========== Modal ========== */}
         <Modal
           isVisible={this.state.isModalVisible}
@@ -101,7 +125,7 @@ class Bus extends Component {
                   fontSize: 30
                 }}
               >
-                {stop_name}
+                {this.props.content}
               </Text>
             </View>
             <ScrollView style={{ marginBottom: 70 }}>
@@ -149,36 +173,18 @@ class Bus extends Component {
                 name="md-close"
                 type="ionicon"
                 color="#40403e"
-                onPress={this._toggleModal}
+                onPress={this._toggleModal2}
                 iconStyle={{ paddingTop: 3, paddingLeft: 1, fontSize: 30 }}
-              />
-            </View>
-            <View style={{ position: "absolute", right: 65, bottom: 5 }}>
-              {/* save to Modal */}
-              <Icon
-                reverse
-                name="md-heart"
-                type="ionicon"
-                color="#ddd"
-                iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
-                onPress={e => {
-                  e.preventDefault();
-                  this.saveBus(atcocode, stop_name);
-                }}
               />
             </View>
           </View>
         </Modal>
-      </Marker>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  iconContainerStyle: {
-    paddingTop: 3,
-    paddingLeft: 2
-  },
   modalStyle: {
     backgroundColor: "#fff",
     height: 500
@@ -192,4 +198,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Bus;
+export default BusItem;

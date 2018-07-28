@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, ScrollView, AsyncStorage } from "react-native";
-import { Marker } from "react-native-maps";
-import { Icon } from "react-native-elements";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { Icon, Button } from "react-native-elements";
 import Modal from "react-native-modal";
 
 import { USERKEY1, USERKEY2 } from "../../config/keys";
 
-class Train extends Component {
+class TrainItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +14,12 @@ class Train extends Component {
     };
   }
 
-  _toggleModal = () => {
+  _toggleModal1 = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+    this.getBusDetail(this.props.code);
+  };
+
+  _toggleModal2 = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
@@ -35,40 +39,66 @@ class Train extends Component {
       });
   }
 
-  saveTrain = (station_code,name) => {
-    try {
-      AsyncStorage.setItem(`train_${station_code}`, `${name}-${station_code}`).then(
-        () => {
-          alert("Success!");
-        }
-      );
-    } catch (error) {
-      alert("Failed to saved, Please try again");
-    }
-  };
-
   render() {
-    const station_code = this.props.station_code;
-    const name = this.props.name;
     return (
-      <Marker
-        name={this.props.name}
-        station_code={this.props.station_code}
-        coordinate={this.props.coordinate}
-        onPress={e => {
-          e.preventDefault();
-          this.getBusDetail(station_code);
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          backgroundColor: "white",
+          height: 60,
+          justifyContent: "space-between",
+          marginHorizontal: 10,
+          marginTop: 10,
+          backgroundColor: "#de2929",
+          borderRadius: 3
         }}
       >
-        <Icon
-          raised
-          name="train-variant"
-          type="material-community"
-          color="#de2929"
-          size={20}
-          iconStyle={styles.iconContainerStyle}
-          onPress={this._toggleModal}
-        />
+        {/* Icon */}
+        <View>
+          <Icon
+            name="train-variant"
+            type="material-community"
+            color="#fff"
+            size={40}
+            iconStyle={{ paddingHorizontal: 10, paddingTop: 10 }}
+          />
+        </View>
+        {/* Content */}
+        <View
+          style={{
+            flexDirection: "row",
+            flexGrow: 1,
+            alignItems: "center"
+          }}
+        >
+          <Text
+            style={{
+              paddingHorizontal: 5,
+              fontSize: 20,
+              alignContent: "center",
+              color: "#fff",
+              fontWeight: "bold"
+            }}
+          >
+            {this.props.content.length > 18
+              ? this.props.content.substring(0, 18) + "..."
+              : this.props.content}
+          </Text>
+        </View>
+        {/* Button */}
+        <View>
+          <Button
+            onPress={this._toggleModal1}
+            title="VIEW"
+            buttonStyle={{
+              backgroundColor: null,
+              width: 75,
+              height: 60
+            }}
+            titleStyle={{ fontWeight: "bold" }}
+          />
+        </View>
         <Modal
           isVisible={this.state.isModalVisible}
           style={{
@@ -94,7 +124,7 @@ class Train extends Component {
                 }}
               >
                 {/* {this.state.trainStationName} */}
-                {name}
+                {this.props.content}
               </Text>
             </View>
             <ScrollView style={{ marginBottom: 70 }}>
@@ -167,26 +197,13 @@ class Train extends Component {
                 name="md-close"
                 type="ionicon"
                 color="#de2929"
-                onPress={this._toggleModal}
+                onPress={this._toggleModal2}
                 iconStyle={{ paddingTop: 3, paddingLeft: 1, fontSize: 30 }}
-              />
-            </View>
-            <View style={{ position: "absolute", right: 65, bottom: 5 }}>
-              <Icon
-                reverse
-                name="md-heart"
-                type="ionicon"
-                color="#ddd"
-                iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
-                onPress={e => {
-                  e.preventDefault();
-                  this.saveTrain(station_code,name);
-                }}
               />
             </View>
           </View>
         </Modal>
-      </Marker>
+      </View>
     );
   }
 }
@@ -202,4 +219,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Train;
+export default TrainItem;

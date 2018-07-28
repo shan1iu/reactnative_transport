@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, View, AsyncStorage, Text } from "react-native";
-import { Marker } from "react-native-maps";
-import { Icon, Badge } from "react-native-elements";
+import { StyleSheet, View, Text } from "react-native";
+import { Icon, Badge, Button } from "react-native-elements";
 import Modal from "react-native-modal";
 
 import TramList from "../modal/TramList";
 import { USERKEY1, USERKEY2, TFGM_KEY } from "../../config/keys";
 
-class Tram extends Component {
+class CarparkItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +14,15 @@ class Tram extends Component {
       tramDetail: {}
     };
   }
+
+  _toggleModal1 = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+    this.getMetrolinkDetail(this.props.code);
+  };
+
+  _toggleModal2 = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
 
   getMetrolinkDetail(id) {
     fetch(`https://api.tfgm.com/odata/Metrolinks(${id})`, {
@@ -31,42 +39,66 @@ class Tram extends Component {
       });
   }
 
-  _toggleModal = () => {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
-  };
-
-  saveTram = (id, name) => {
-    try {
-      AsyncStorage.setItem(`tram_${id}`, `${name}-${id}`).then(() => {
-        alert("Success!");
-      });
-    } catch (error) {
-      alert("Failed to saved, Please try again");
-    }
-  };
-
   render() {
-    const id = this.props.id;
-    const name = this.props.stationLocation;
     return (
-      <Marker
-        coordinate={this.props.coordinate}
-        stationLocation={this.props.stationLocation}
-        id={this.props.id}
-        onPress={e => {
-          e.preventDefault();
-          this.getMetrolinkDetail(id);
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          backgroundColor: "white",
+          height: 60,
+          justifyContent: "space-between",
+          marginHorizontal: 10,
+          marginTop: 10,
+          backgroundColor: "#e8be3e",
+          borderRadius: 3
         }}
       >
-        <Icon
-          raised
-          name="tram"
-          type="material-community"
-          color="#e8be3e"
-          size={20}
-          iconStyle={styles.containerStyle}
-          onPress={this._toggleModal}
-        />
+        {/* Icon */}
+        <View>
+          <Icon
+            name="tram"
+            type="material-community"
+            color="#fff"
+            size={40}
+            iconStyle={{ paddingHorizontal: 10, paddingTop: 10 }}
+          />
+        </View>
+        {/* Content */}
+        <View
+          style={{
+            flexDirection: "row",
+            flexGrow: 1,
+            alignItems: "center"
+          }}
+        >
+          <Text
+            style={{
+              paddingHorizontal: 5,
+              fontSize: 20,
+              alignContent: "center",
+              color: "#fff",
+              fontWeight: "bold"
+            }}
+          >
+            {this.props.content.length > 18
+              ? this.props.content.substring(0, 18) + "..."
+              : this.props.content}
+          </Text>
+        </View>
+        {/* Button */}
+        <View>
+          <Button
+            onPress={this._toggleModal1}
+            title="VIEW"
+            buttonStyle={{
+              backgroundColor: null,
+              width: 75,
+              height: 60
+            }}
+            titleStyle={{ fontWeight: "bold" }}
+          />
+        </View>
         <Modal
           isVisible={this.state.isModalVisible}
           style={{
@@ -96,7 +128,7 @@ class Tram extends Component {
                   }}
                 >
                   {/* {this.state.tramDetail.StationLocation} */}
-                  {name}
+                  {this.props.content}
                 </Text>
                 <View style={{ flexDirection: "row" }}>
                   <Text style={{ fontSize: 18, color: "#aaa" }}>
@@ -153,28 +185,12 @@ class Tram extends Component {
                 type="ionicon"
                 color="#e5b700"
                 iconStyle={{ paddingTop: 3, paddingLeft: 1, fontSize: 30 }}
-                onPress={e => {
-                  e.preventDefault();
-                  this._toggleModal();
-                }}
-              />
-            </View>
-            <View style={{ position: "absolute", right: 65, bottom: 5 }}>
-              <Icon
-                reverse
-                name="md-heart"
-                type="ionicon"
-                color="#ddd"
-                iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
-                onPress={e => {
-                  e.preventDefault();
-                  this.saveTram(id, name);
-                }}
+                onPress={this._toggleModal2}
               />
             </View>
           </View>
         </Modal>
-      </Marker>
+      </View>
     );
   }
 }
@@ -186,4 +202,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Tram;
+export default CarparkItem;
