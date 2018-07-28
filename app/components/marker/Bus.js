@@ -91,7 +91,7 @@ class Bus extends Component {
                 {stop_name}
               </Text>
             </View>
-            <ScrollView>
+            <ScrollView style={{ marginBottom: 70 }}>
               {Object.keys(this.state.busDetail).map((key, index) => {
                 return (
                   <View
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
   modalStyle: {
     backgroundColor: "#fff",
-    height: 600
+    height: 500
   },
   time: {
     fontSize: 20,

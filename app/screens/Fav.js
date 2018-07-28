@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import {
   View,
-  StatusBar,
   StyleSheet,
   ScrollView,
   SafeAreaView,
-  Text,
-  Platform
+  AsyncStorage
 } from "react-native";
+import { Button } from "react-native-elements";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 import FavCard from "./favCard/FavCard";
 import NavBar from "./navBar/NavBar";
@@ -15,7 +15,23 @@ import NavBar from "./navBar/NavBar";
 class Fav extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      storage_key: []
+    };
   }
+
+  // get all the keys and render the component on Fav screen.
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getAllKeys();
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
 
   render() {
     return (
@@ -23,7 +39,6 @@ class Fav extends Component {
         <NavBar title="Saved" />
         <ScrollView style={{ flex: 1 }}>
           {/* BUS */}
-
           <FavCard
             backgroundColor="#40403e"
             iconName="bus"
@@ -48,6 +63,17 @@ class Fav extends Component {
             content="Tram Garden Great Western"
           />
         </ScrollView>
+        {/* When click this button, refresh the state of this conmponent ( get the new LocalStorage)  */}
+        <Button
+          title="REFRESH"
+          titleStyle={{ fontWeight: "700" }}
+          buttonStyle={{
+            backgroundColor: "#bbbbbb",
+            height: 45,
+            borderRadius: 5
+          }}
+          containerStyle={{ marginHorizontal: 20, marginVertical: 10 }}
+        />
       </SafeAreaView>
     );
   }

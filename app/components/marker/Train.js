@@ -83,7 +83,7 @@ class Train extends Component {
                 {this.state.trainStationName}
               </Text>
             </View>
-            <ScrollView>
+            <ScrollView style={{ marginBottom: 70 }}>
               {this.state.trainDetail.map((train, index) => (
                 <View
                   key={index}

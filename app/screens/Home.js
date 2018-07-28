@@ -158,9 +158,9 @@ class Home extends Component {
           <MapView
             style={styles.map}
             region={this.state.currentLocationMe}
-            onRegionChangeComplete={e =>
-              console.log("onRegionChangeComplete:", e.latitude, e.longitude)
-            }
+            // onRegionChangeComplete={e =>
+            //   console.log("onRegionChangeComplete:", e.latitude, e.longitude)
+            // }
             showsCompass={true}
             showsTraffic={true}
             scrollEnabled={true}

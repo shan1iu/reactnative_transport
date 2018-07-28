@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, ScrollView, Text } from "react-native";
+import { StyleSheet, View, AsyncStorage, Text } from "react-native";
 import { Marker } from "react-native-maps";
 import { Icon, Badge } from "react-native-elements";
 import Modal from "react-native-modal";
@@ -7,9 +7,6 @@ import Modal from "react-native-modal";
 import TramList from "../modal/TramList";
 import { USERKEY1, USERKEY2, TFGM_KEY } from "../../config/keys";
 
-// const TFGM_KEY = {
-//   "Ocp-Apim-Subscription-Key": "352d46528de74094835792b951c110fc"
-// };
 class Tram extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +33,18 @@ class Tram extends Component {
 
   _toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
+
+  storeTest = async id => {
+    try {
+      await AsyncStorage.setItem(`tramkey_${id}`, `tramvalue_${id}`).then(
+        () => {
+          alert("Success!");
+        }
+      );
+    } catch (error) {
+      alert("Failed to saved, Please try again");
+    }
   };
 
   render() {
@@ -143,8 +152,12 @@ class Tram extends Component {
                 name="md-close"
                 type="ionicon"
                 color="#e5b700"
-                onPress={this._toggleModal}
                 iconStyle={{ paddingTop: 3, paddingLeft: 1, fontSize: 30 }}
+                onPress={e=>{
+                    e.preventDefault();
+                    this._toggleModal();
+                  }
+                }
               />
             </View>
             <View style={{ position: "absolute", right: 65, bottom: 5 }}>
@@ -154,6 +167,11 @@ class Tram extends Component {
                 type="ionicon"
                 color="#ddd"
                 iconStyle={{ paddingTop: 4, paddingLeft: 1, fontSize: 30 }}
+                onPress={e=>{
+                    e.preventDefault();
+                    this.storeTest(this.props.id);
+                  }
+                }
               />
             </View>
           </View>
