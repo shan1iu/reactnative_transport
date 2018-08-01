@@ -5,3 +5,4 @@ export const USERKEY2 =
 export const TFGM_KEY = {
   "Ocp-Apim-Subscription-Key": "352d46528de74094835792b951c110fc"
 };
+export const API_KEY = "AIzaSyCdY4Et3Vq2MjQdj0VDBYKoQ8YGeulTvhk";
